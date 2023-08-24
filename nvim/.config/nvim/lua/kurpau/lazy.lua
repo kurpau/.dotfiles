@@ -17,23 +17,29 @@ local plugins = {
         tag = '0.1.2',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-    {"nvim-treesitter/nvim-treesitter"},
+    { "nvim-treesitter/nvim-treesitter" },
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         dependencies = {
             -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {'williamboman/mason.nvim'},           -- Optional
-            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+            { 'neovim/nvim-lspconfig' },           -- Required
+            { 'williamboman/mason.nvim' },         -- Optional
+            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
-            {'hrsh7th/nvim-cmp'},     -- Required
-            {'hrsh7th/cmp-nvim-lsp'}, -- Required
-            {'L3MON4D3/LuaSnip'},     -- Required
+            { 'hrsh7th/nvim-cmp' },   -- Required
+            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+            { 'L3MON4D3/LuaSnip' },   -- Required
         }
-    }
+    },
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+    },
+    { "theprimeagen/harpoon" }
 }
 
 local opts = {}
