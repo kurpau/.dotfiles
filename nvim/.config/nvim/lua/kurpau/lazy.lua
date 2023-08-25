@@ -39,7 +39,8 @@ local plugins = {
         priority = 1000,
         opts = {},
     },
-    { "theprimeagen/harpoon" }
+    { "theprimeagen/harpoon" },
+    { 'christoomey/vim-tmux-navigator' }
 }
 
 local opts = {}
