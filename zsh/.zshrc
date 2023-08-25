@@ -48,7 +48,7 @@ fi
 if [[ ! -e ~/.zsh/zsh-autosuggestions ]]; then
   git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions
 fi
-if [[ ! -e ~/.zsh/zsh-git-prompt ]]; then
+if [[ ! -e ~/.zsh/powerlevel10k ]]; then
   git clone https://github.com/romkatv/powerlevel10k.git ~/.zsh/powerlevel10k
 fi
 
