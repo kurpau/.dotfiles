@@ -1,7 +1,5 @@
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Rex)
 
 -- move entire line in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -46,3 +44,4 @@ vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/the
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
+

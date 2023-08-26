@@ -26,3 +26,10 @@ vim.opt.scrolloff = 8
 vim.opt.updatetime = 50
 
 vim.g.mapleader = " "
+
+
+-- netrw
+vim.g.netrw_banner = 0
+vim.g.netrw_preview = 1
+vim.g.netrw_liststyle = 3
+vim.g.netrw_winsize = 30
