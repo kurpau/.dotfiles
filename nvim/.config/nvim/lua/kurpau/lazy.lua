@@ -40,7 +40,8 @@ local plugins = {
         opts = {},
     },
     { "theprimeagen/harpoon" },
-    { 'christoomey/vim-tmux-navigator' }
+    { 'christoomey/vim-tmux-navigator' },
+    { 'mhartington/formatter.nvim' }
 }
 
 local opts = {}
