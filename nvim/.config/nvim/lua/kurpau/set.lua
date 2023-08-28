@@ -1,4 +1,16 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+
+-- Set highlight on search
+vim.o.hlsearch = false
+vim.opt.incsearch = true
+
+-- Make line numbers default
+vim.wo.number = true
+
+-- Enable mouse mode
+vim.o.mouse = "a"
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -7,17 +19,16 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+-- Enable break indent
+vim.o.breakindent = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
@@ -25,8 +36,7 @@ vim.opt.scrolloff = 8
 
 vim.opt.updatetime = 50
 
-vim.g.mapleader = " "
-
+vim.opt.completeopt = "menuone,noselect"
 
 -- netrw
 vim.g.netrw_banner = 0
