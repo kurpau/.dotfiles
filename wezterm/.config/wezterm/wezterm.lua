@@ -1,6 +1,6 @@
 -- https://wezfurlong.org/wezterm/config/lua/general.html
 -- Pull in the wezterm API
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 
 -- This table will hold the configuration.
 local config = {}
@@ -8,20 +8,23 @@ local config = {}
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
-  config = wezterm.config_builder()
+	config = wezterm.config_builder()
 end
 
 -- This is where you actually apply your config choices
 config.adjust_window_size_when_changing_font_size = false
-config.font = wezterm.font 'Hack Nerd Font Mono'
-config.color_scheme = 'Tokyo Night (Gogh)'
+config.font = wezterm.font("Hack Nerd Font Mono")
+config.color_scheme = "Tokyo Night (Gogh)"
 config.automatically_reload_config = true
-config.audible_bell = 'Disabled'
-config.font_size = 12
+config.audible_bell = "Disabled"
+config.font_size = 20
 config.window_decorations = "RESIZE"
 config.enable_tab_bar = false
 config.exit_behavior = "CloseOnCleanExit"
+config.cursor_blink_rate = 0
+config.window_background_opacity = 0.95
+config.initial_rows = 30
+config.initial_cols = 80
 
 -- and finally, return the configuration to wezterm
 return config
-
