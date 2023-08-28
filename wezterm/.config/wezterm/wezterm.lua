@@ -25,6 +25,7 @@ config.cursor_blink_rate = 0
 config.window_background_opacity = 0.95
 config.initial_rows = 30
 config.initial_cols = 80
+config.line_height = 1.05
 config.colors = {
 	cursor_fg = "black",
 }
