@@ -42,7 +42,7 @@ display_return_status() {
 
 display_git_status() {
     local git_index=$(git status --porcelain 2> /dev/null)
-    local git_status="$COLOR_WHITE%Bon "
+    local git_status
     local git_status_color=$COLOR_GIT_STATUS_DEFAULT
 
     if [[ -z $git_index ]]; then
@@ -55,7 +55,7 @@ display_git_status() {
 
     local branch_name=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     if [[ -n $branch_name ]]; then
-        git_status+="$COLOR_WHITE ${git_status_color}%B${branch_name}%b%f"
+        git_status+="$COLOR_WHITE%Bon  ${git_status_color}%B${branch_name}%b%f"
     fi
 
     local branch_status=$(git status -sb 2>/dev/null | grep '^##' | sed 's/^## //')
