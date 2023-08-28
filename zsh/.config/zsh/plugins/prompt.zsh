@@ -1,96 +1,79 @@
-# https://github.com/jackharrisonsherlock/common
-
-# Prompt symbol
-COMMON_PROMPT_SYMBOL="❯"
-
 # Colors
-COMMON_COLORS_HOST_ME=green
-COMMON_COLORS_CURRENT_DIR=blue
-COMMON_COLORS_RETURN_STATUS_TRUE=magenta
-COMMON_COLORS_RETURN_STATUS_FALSE=yellow
-COMMON_COLORS_GIT_STATUS_DEFAULT=green
-COMMON_COLORS_GIT_STATUS_UNSTAGED=red
-COMMON_COLORS_GIT_STATUS_STAGED=yellow
-COMMON_COLORS_GIT_PROMPT_SHA=green
-COMMON_COLORS_BG_JOBS=yellow
-ZSH_THEME_GIT_PROMPT_BEHIND="%B%F{red}%f%b "
-ZSH_THEME_GIT_PROMPT_AHEAD="%B%F{green}%f%b ahah "
+PROMPT_SYMBOL="❯"
 
-# Prompt
-PROMPT='$(current_time)$(common_host)$(common_current_dir)$(common_bg_jobs)$(common_git_status)$(common_return_status)'
+# Color definitions for better readability
+COLOR_GREEN="%F{green}"
+COLOR_BLUE="%F{blue}"
+COLOR_MAGENTA="%F{magenta}"
+COLOR_YELLOW="%F{yellow}"
+COLOR_RED="%F{red}"
+COLOR_WHITE="%F{white}"
+COLOR_GRAY="%F{gray}"
 
-# Enable redrawing of prompt variables
- setopt promptsubst
+# Color assignments
+COLOR_HOST_ME=$COLOR_GREEN
+COLOR_CURRENT_DIR=$COLOR_BLUE
+COLOR_RETURN_STATUS_SUCCESS=$COLOR_MAGENTA
+COLOR_RETURN_STATUS_FAIL=$COLOR_RED
+COLOR_GIT_STATUS_DEFAULT=$COLOR_GRAY
+COLOR_GIT_STATUS_CLEAN=$COLOR_GREEN
+COLOR_GIT_STATUS_UNSTAGED=$COLOR_RED
+COLOR_GIT_STATUS_STAGED=$COLOR_YELLOW
+COLOR_BG_JOBS=$COLOR_YELLOW
 
-# Current time
-current_time() {
-    echo -n "%F{yellow}[%T] "
+GIT_PROMPT_BEHIND="%B$COLOR_RED%f%b "
+GIT_PROMPT_AHEAD="%B$COLOR_GREEN%f%b "
+
+PROMPT='$(display_current_time)$(display_host)$(display_current_dir)$(display_bg_jobs)$(display_git_status)$(display_return_status)'
+
+setopt promptsubst
+
+display_current_time() {
+    echo -n "${COLOR_GRAY}[%T] "
 }
 
-# Host
-common_host() {
-  if [[ -n $SSH_CONNECTION ]]; then
-    me="%n@%m"
-  elif [[ $LOGNAME != $USER ]]; then
-    me="%n"
-  fi
-  if [[ -n $me ]]; then
-    echo "%{$fg[$COMMON_COLORS_HOST_ME]%}$me%{$reset_color%}:"
-  fi
-  if [[ $AWS_VAULT ]]; then
-    echo "%{$fg[$COMMON_COLORS_HOST_AWS_VAULT]%}$AWS_VAULT%{$reset_color%} "
-  fi
+display_current_dir() {
+  echo -n "$GIT_PROMPT_PREFIX$COLOR_CURRENT_DIR%~ "
 }
 
-# Current directory
-common_current_dir() {
-  echo -n "$ZSH_THEME_GIT_PROMPT_PREFIX%F{$COMMON_COLORS_CURRENT_DIR}%~ "
+display_return_status() {
+  echo -n "\n%(?.${COLOR_RETURN_STATUS_SUCCESS}.${COLOR_RETURN_STATUS_FAIL})$PROMPT_SYMBOL%f%b "
 }
 
-# Prompt symbol
-common_return_status() {
-  echo -n "\n%(?.%F{$COMMON_COLORS_RETURN_STATUS_TRUE}.%F{$COMMON_COLORS_RETURN_STATUS_FALSE})$COMMON_PROMPT_SYMBOL%f%b "
-}
+display_git_status() {
+    local git_index=$(git status --porcelain 2> /dev/null)
+    local git_status="$COLOR_WHITE%Bon "
+    local git_status_color=$COLOR_GIT_STATUS_DEFAULT
 
-# Git status
-common_git_status() {
-    local INDEX STATUS STATUS_COLOR
-    INDEX=$(git status --porcelain 2> /dev/null)
-
-    STATUS="%B%F{white}on "
-    STATUS_COLOR="%F{$COMMON_COLORS_GIT_STATUS_DEFAULT}"
-
-    # https://git-scm.com/docs/git-status#_short_format
-    local staged=$(echo "$INDEX" | command grep -e "^[MADRCU]" &> /dev/null)
-    local unstaged=$(echo "$INDEX" | command grep -e "^[MADRCU? ][MADRCU?]" &> /dev/null)
-
-    if [[ -n ${staged} ]]; then
-        STATUS_COLOR="%F{$COMMON_COLORS_GIT_STATUS_STAGED}"
-    elif [[ -n ${unstaged} ]]; then
-        STATUS_COLOR="%F{$COMMON_COLORS_GIT_STATUS_UNSTAGED}"
+    if [[ -z $git_index ]]; then
+        git_status_color=$COLOR_GIT_STATUS_CLEAN
+    elif [[ $(echo "$git_index" | command grep -e "^[MADRCU]") ]]; then
+        git_status_color=$COLOR_GIT_STATUS_STAGED
+    elif [[ $(echo "$git_index" | command grep -e "^[MADRCU? ][MADRCU?]") ]]; then
+        git_status_color=$COLOR_GIT_STATUS_UNSTAGED
     fi
 
-    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    if [[ -n ${branch} ]]; then
-        STATUS+="%b%F{green}λ%F{white}: %B${STATUS_COLOR}${branch}%b%f"
+    local branch_name=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ -n $branch_name ]]; then
+        git_status+="$COLOR_WHITE ${git_status_color}%B${branch_name}%b%f"
     fi
 
     local branch_status=$(git status -sb 2>/dev/null | grep '^##' | sed 's/^## //')
+    [[ $branch_status == *ahead* ]] && git_status+=" $GIT_PROMPT_AHEAD"
+    [[ $branch_status == *behind* ]] && git_status+=" $GIT_PROMPT_BEHIND"
 
-    if [[ "$branch_status" == *ahead* ]]; then
-        STATUS+="$ZSH_THEME_GIT_PROMPT_AHEAD"
-    fi
-
-    if [[ "$branch_status" == *behind* ]]; then
-        STATUS+="$ZSH_THEME_GIT_PROMPT_BEHIND"
-    fi
-
-    echo -n "${STATUS} "
+    echo -n "${git_status} "
 }
 
-
-# Background Jobs
-common_bg_jobs() {
-  bg_status="%{$fg[$COMMON_COLORS_BG_JOBS]%}%(1j.↓%j .)"
-  echo -n $bg_status
+display_host() {
+    local user_host=""
+    [[ -n $SSH_CONNECTION ]] && user_host="%n@%m"
+    [[ $LOGNAME != $USER ]] && user_host="%n"
+    [[ -n $user_host ]] && echo "${COLOR_HOST_ME}$user_host$reset_color:"
 }
+
+display_bg_jobs() {
+  local jobs_status="${COLOR_BG_JOBS}%(1j.↓%j .)"
+  echo -n $jobs_status
+}
+
