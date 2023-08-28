@@ -1,8 +1,3 @@
-
-# Enable colors and change prompt:
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
-# autoload -U colors && colors
-
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
@@ -46,4 +41,7 @@ compinit
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval "$(starship init zsh)"
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
+
