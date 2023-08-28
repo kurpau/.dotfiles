@@ -13,9 +13,11 @@ COMMON_COLORS_GIT_STATUS_UNSTAGED=red
 COMMON_COLORS_GIT_STATUS_STAGED=yellow
 COMMON_COLORS_GIT_PROMPT_SHA=green
 COMMON_COLORS_BG_JOBS=yellow
+ZSH_THEME_GIT_PROMPT_BEHIND="%B%F{red}%f%b "
+ZSH_THEME_GIT_PROMPT_AHEAD="%B%F{green}%f%b ahah "
 
-# Left Prompt
-PROMPT='$(current_time)$(common_host)$(common_current_dir)$(common_bg_jobs)%B%F{white}on $(common_git_status)$(common_return_status)'
+# Prompt
+PROMPT='$(current_time)$(common_host)$(common_current_dir)$(common_bg_jobs)$(common_git_status)$(common_return_status)'
 
 # Enable redrawing of prompt variables
  setopt promptsubst
@@ -52,26 +54,40 @@ common_return_status() {
 
 # Git status
 common_git_status() {
-    local message=""
-    local message_color="%F{$COMMON_COLORS_GIT_STATUS_DEFAULT}"
+    local INDEX STATUS STATUS_COLOR
+    INDEX=$(git status --porcelain 2> /dev/null)
+
+    STATUS="%B%F{white}on "
+    STATUS_COLOR="%F{$COMMON_COLORS_GIT_STATUS_DEFAULT}"
 
     # https://git-scm.com/docs/git-status#_short_format
-    local staged=$(git status --porcelain 2>/dev/null | grep -e "^[MADRCU]")
-    local unstaged=$(git status --porcelain 2>/dev/null | grep -e "^[MADRCU? ][MADRCU?]")
+    local staged=$(echo "$INDEX" | command grep -e "^[MADRCU]" &> /dev/null)
+    local unstaged=$(echo "$INDEX" | command grep -e "^[MADRCU? ][MADRCU?]" &> /dev/null)
 
     if [[ -n ${staged} ]]; then
-        message_color="%F{$COMMON_COLORS_GIT_STATUS_STAGED}"
+        STATUS_COLOR="%F{$COMMON_COLORS_GIT_STATUS_STAGED}"
     elif [[ -n ${unstaged} ]]; then
-        message_color="%F{$COMMON_COLORS_GIT_STATUS_UNSTAGED}"
+        STATUS_COLOR="%F{$COMMON_COLORS_GIT_STATUS_UNSTAGED}"
     fi
 
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     if [[ -n ${branch} ]]; then
-        message+="%b%F{green}λ%F{white}: %B${message_color}${branch}%b%f"
+        STATUS+="%b%F{green}λ%F{white}: %B${STATUS_COLOR}${branch}%b%f"
     fi
 
-    echo -n "${message} "
+    local branch_status=$(git status -sb 2>/dev/null | grep '^##' | sed 's/^## //')
+
+    if [[ "$branch_status" == *ahead* ]]; then
+        STATUS+="$ZSH_THEME_GIT_PROMPT_AHEAD"
+    fi
+
+    if [[ "$branch_status" == *behind* ]]; then
+        STATUS+="$ZSH_THEME_GIT_PROMPT_BEHIND"
+    fi
+
+    echo -n "${STATUS} "
 }
+
 
 # Background Jobs
 common_bg_jobs() {
