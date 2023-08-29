@@ -139,6 +139,16 @@ local plugins = {
 	{ "theprimeagen/harpoon" },
 	{ "christoomey/vim-tmux-navigator" },
 	{ "mhartington/formatter.nvim" },
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {}, -- this is equalent to setup({}) function
+	},
+	{ "windwp/nvim-ts-autotag" },
+	{
+		"echasnovski/mini.files",
+		version = false,
+	},
 }
 
 local opts = {}

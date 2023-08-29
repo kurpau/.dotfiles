@@ -4,7 +4,14 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- toggle file explorer
+local minifiles_toggle = function()
+	if not MiniFiles.close() then
+		MiniFiles.open()
+	end
+end
 vim.keymap.set("n", "<leader>pv", vim.cmd.Rex)
+vim.keymap.set("n", "<leader>mv", minifiles_toggle)
 
 -- move entire line in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

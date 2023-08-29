@@ -1,13 +1,32 @@
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require("nvim-treesitter.configs").setup({
+	modules = {},
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { "c", "lua", "python", "tsx", "typescript", "vimdoc", "vim" },
+	ensure_installed = {
+		"c",
+		"lua",
+		"python",
+		"tsx",
+		"typescript",
+		"vue",
+		"javascript",
+		"html",
+		"css",
+		"scss",
+		"vimdoc",
+		"vim",
+	},
+	sync_install = false,
+	ignore_install = {},
 
 	-- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
 	auto_install = false,
 
 	highlight = { enable = true },
+	custom_captures = {
+		["attr.value"] = "TSKeyword",
+	},
 	indent = { enable = true },
 	incremental_selection = {
 		enable = true,
@@ -52,5 +71,8 @@ require("nvim-treesitter.configs").setup({
 				["[]"] = "@class.outer",
 			},
 		},
+	},
+	autotag = {
+		enable = true,
 	},
 })
