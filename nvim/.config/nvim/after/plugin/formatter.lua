@@ -33,6 +33,7 @@ require("formatter").setup({
 		javascript = { prettier("babel") },
 		vue = { prettier("vue") },
 		css = { prettier("css") },
+		json = { prettier("json") },
 		lua = {
 			require("formatter.filetypes.lua").stylua,
 		},
