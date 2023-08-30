@@ -4,14 +4,24 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- toggle file explorer
+-- ============== toggle file explorers ============
 local minifiles_toggle = function()
 	if not MiniFiles.close() then
 		MiniFiles.open()
 	end
 end
-vim.keymap.set("n", "<leader>pv", vim.cmd.Rex)
+
+local netrw_toggle = function()
+	if vim.fn.bufname(vim.fn.bufnr()) == "" then
+		vim.cmd("Explore")
+	else
+		vim.cmd("Rexplore")
+	end
+end
+
+vim.keymap.set("n", "<leader>pv", netrw_toggle)
 vim.keymap.set("n", "<leader>mv", minifiles_toggle)
+-- =================================================
 
 -- move entire line in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -35,22 +45,19 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 -- prevent accidental quitting without saving
 vim.keymap.set("n", "Q", "<nop>")
 
--- smth cool, dunno how it works for now
+-- use fzf to find folders and enter new tmux session
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+
 -- format current buffer with lsp
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-
--- quickfix navigation
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- edit all the same words you're currently on
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>")
+
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 vim.keymap.set("n", "<leader><leader>", function()
 	vim.cmd("so")

@@ -145,10 +145,7 @@ local plugins = {
 		opts = {}, -- this is equalent to setup({}) function
 	},
 	{ "windwp/nvim-ts-autotag" },
-	{
-		"echasnovski/mini.files",
-		version = false,
-	},
+	{ "echasnovski/mini.files", version = false },
 }
 
 local opts = {}
