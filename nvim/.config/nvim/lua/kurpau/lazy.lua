@@ -173,7 +173,6 @@ local plugins = {
 	},
 	{
 		"mfussenegger/nvim-lint",
-		event = "LazyFile",
 	},
 }
 
