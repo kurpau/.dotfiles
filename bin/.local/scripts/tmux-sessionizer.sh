@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # This script searches for directories in specified paths.
 # If only one argument is passed, it assigns it to 'selected'.
@@ -8,7 +8,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/work/builds ~/projects ~/ ~/work ~/personal ~/personal/yt -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/repos ~/projects ~/Desktop -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 # Exit if no directory is selected.

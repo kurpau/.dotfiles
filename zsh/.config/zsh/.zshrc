@@ -22,3 +22,10 @@ setopt PUSHD_SILENT         # Do not print the directory stack after pushd or po
 
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
+# Make fzf ignor node modules on .git folders
+export FZF_DEFAULT_COMMAND='find . -type d \( -path "*/.git" -o -path "*/node_modules" \) -prune -o -print | sed 1d'
+
+alias python=/usr/local/bin/python3
+alias pip=/usr/local/bin/pip3
+

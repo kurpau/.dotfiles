@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
+#
+# paths
+export PATH="$HOME/.local/scripts:$PATH"
 
 # XDG
 export XDG_CONFIG_HOME=$HOME/.config
@@ -12,6 +15,4 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export HISTSIZE=10000 # Maximum events for internal history
 export SAVEHIST=10000 # Maximum events in history file
 
-# paths
-export PATH="$HOME/.local/scripts:$PATH"
 
