@@ -145,7 +145,24 @@ local plugins = {
 		opts = {}, -- this is equalent to setup({}) function
 	},
 	{ "windwp/nvim-ts-autotag" },
-	{ "echasnovski/mini.files", version = false },
+	{
+		"iamcco/markdown-preview.nvim",
+		config = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+	{
+		"nvim-tree/nvim-tree.lua",
+		version = "*",
+
+		config = function()
+			require("nvim-tree").setup({})
+		end,
+		lazy = false,
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 }
 
 local opts = {}

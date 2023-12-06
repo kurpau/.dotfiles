@@ -4,23 +4,8 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- ============== toggle file explorers ============
-local minifiles_toggle = function()
-	if not MiniFiles.close() then
-		MiniFiles.open()
-	end
-end
-
-local netrw_toggle = function()
-	if vim.fn.bufname(vim.fn.bufnr()) == "" then
-		vim.cmd("Explore")
-	else
-		vim.cmd("Rexplore")
-	end
-end
-
-vim.keymap.set("n", "<leader>pv", netrw_toggle)
-vim.keymap.set("n", "<leader>mv", minifiles_toggle)
+-- ============== toggle file explorer (nvim-tree) ============
+vim.keymap.set("n", "<leader>pv", ":NvimTreeToggle<cr>")
 -- =================================================
 
 -- move entire line in visual mode
