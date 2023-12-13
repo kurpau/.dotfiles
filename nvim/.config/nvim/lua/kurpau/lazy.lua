@@ -174,6 +174,10 @@ local plugins = {
 	{
 		"mfussenegger/nvim-lint",
 	},
+	{
+		"stevearc/oil.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
 }
 
 local opts = {}
