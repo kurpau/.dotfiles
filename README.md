@@ -9,7 +9,7 @@
 Clone into `$HOME` directory or `~`
 
 ```bash
-git clone https://github.com/kurpau/.dotfiles.git ~
+git clone https://github.com/kurpau/.dotfiles.git ~/.dotfiles
 ```
 
 Run `stow` to symlink everything or select specific config
@@ -21,8 +21,3 @@ stow */ # Everything (the '/' ignores the README)
 ```bash
 stow zsh 
 ```
-
-## Notes
-
-Nvim requires ripgrep for plugins to work properly
-For plugins to function correctly in nvim, ripgrep is a necessary dependency
