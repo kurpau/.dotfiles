@@ -1,31 +1,53 @@
-#!/usr/bin/env zsh
+# Enable colors and change prompt:
+autoload -U colors && colors
 
-# Enable and improve completion
-autoload -U compinit; compinit
-_comp_options+=(globdots) # With hidden files
-source $ZDOTDIR/plugins/completion.zsh
+# History in cache directory:
+HISTSIZE=10000
+SAVEHIST=10000
 
-# Customized prompt
-source $ZDOTDIR/plugins/prompt.zsh
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
 
-# Vi mode
+# vi mode
 bindkey -v
-export KEYTIMEOUT=1
+export KEYTIMEOUT=5
 
-# Cursor for Normal and Insert modes
-source $ZDOTDIR/plugins/dynamic_cursor.zsh
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
 
-# Zsh Directory Stack
-setopt AUTO_PUSHD           # Push the current directory visited on the stack.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[5 q"
+}
 
-alias d='dirs -v'
-for index ({1..9}) alias "$index"="cd +${index}"; unset index
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-# Make fzf ignor node modules on .git folders
-export FZF_DEFAULT_COMMAND='find . -type d \( -path "*/.git" -o -path "*/node_modules" \) -prune -o -print | sed 1d'
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
 
-alias python=/usr/local/bin/python3
-alias pip=/usr/local/bin/pip3
+# Check if Starship is installed and install it if not
+if ! command -v starship >/dev/null 2>&1; then
+    echo "Installing Starship..."
+    curl -sS https://starship.rs/install.sh | sh
+fi
 
+# Initialize Starship
+eval "$(starship init zsh)"
