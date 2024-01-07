@@ -1,0 +1,18 @@
+add_newline = false
+
+[directory]
+truncation_length = 8
+truncation_symbol = '…/'
+
+[username]
+style_user = 'blue bold'
+style_root = 'white bold'
+format = '[$user]($style)'
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol](bold blue)@[$hostname](bold green): '
+trim_at = '.companyname.com'
+disabled = false
