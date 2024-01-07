@@ -49,5 +49,7 @@ if ! command -v starship >/dev/null 2>&1; then
     curl -sS https://starship.rs/install.sh | sh
 fi
 
+export STARSHIP_CONFIG=~/.config/zsh/starship.toml
+
 # Initialize Starship
 eval "$(starship init zsh)"
