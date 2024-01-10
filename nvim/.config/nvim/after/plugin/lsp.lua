@@ -22,6 +22,7 @@ local on_attach = function(_, bufnr)
 	nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 	nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
 	nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+	nmap("<leader>vca", vim.lsp.buf.code_action, "[V]im [C]ode [A]ction")
 
 	-- See `:help K` for why this keymap
 	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
