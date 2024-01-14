@@ -159,9 +159,6 @@ local plugins = {
     event = "VeryLazy",
   },
   {
-    "mfussenegger/nvim-lint",
-  },
-  {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
