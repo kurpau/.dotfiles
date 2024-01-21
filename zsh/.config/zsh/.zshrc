@@ -1,3 +1,23 @@
+# EXPORTS 
+
+
+export XDG_CONFIG_HOME=$HOME/.config
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# starship
+export STARSHIP_CONFIG=~/.config/zsh/starship.toml
+
+
+# CONFIG
+
+
 # Enable colors and change prompt:
 autoload -U colors && colors
 
@@ -48,9 +68,6 @@ if ! command -v starship >/dev/null 2>&1; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
-
-export XDG_CONFIG_HOME="$HOME/.config"
-export STARSHIP_CONFIG=~/.config/zsh/starship.toml
 
 # Initialize Starship
 eval "$(starship init zsh)"
