@@ -61,10 +61,6 @@ local plugins = {
   },
   { "theprimeagen/harpoon" },
   {
-    "stevearc/conform.nvim",
-    opts = {},
-  },
-  {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {}
@@ -92,6 +88,7 @@ local plugins = {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  { 'nvimtools/none-ls.nvim' },
 }
 
 require("lazy").setup(plugins)
