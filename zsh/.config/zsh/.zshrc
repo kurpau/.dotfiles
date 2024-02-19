@@ -1,6 +1,5 @@
 # EXPORTS 
 
-
 export XDG_CONFIG_HOME=$HOME/.config
 
 # bun
@@ -13,10 +12,6 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 # starship
 export STARSHIP_CONFIG=~/.config/zsh/starship.toml
-
-
-# CONFIG
-
 
 # Enable colors and change prompt:
 autoload -U colors && colors
