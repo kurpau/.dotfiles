@@ -1,7 +1,7 @@
 require("mason").setup()
 
 require("mason-lspconfig").setup({
-	ensure_installed = { "lua_ls", "tsserver", "volar", "ruff_lsp" },
+	ensure_installed = { "lua_ls", "tsserver", "volar", "ruff_lsp", "pylsp" },
 })
 
 local lspconfig = require("lspconfig")
@@ -17,6 +17,19 @@ lspconfig.lua_ls.setup({
 lspconfig.ruff_lsp.setup({})
 lspconfig.tsserver.setup({})
 lspconfig.volar.setup({})
+lspconfig.pylsp.setup({
+	settings = {
+		pylsp = {
+			plugins = {
+				pycodestyle = {
+					maxLineLength = 120, -- Set this to your preferred line length
+					-- If you want to ignore the line length check entirely, use:
+					-- ignore = {'E501'}
+				},
+			},
+		},
+	},
+})
 
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
