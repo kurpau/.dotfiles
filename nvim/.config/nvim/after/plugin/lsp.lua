@@ -1,10 +1,11 @@
 require("mason").setup()
 
 require("mason-lspconfig").setup({
-	ensure_installed = { "lua_ls", "tsserver", "volar", "ruff_lsp", "pylsp" },
+	ensure_installed = { "lua_ls", "tsserver", "volar", "pyright", "tsserver", "eslint" },
 })
 
 local lspconfig = require("lspconfig")
+
 lspconfig.lua_ls.setup({
 	settings = {
 		Lua = {
@@ -14,19 +15,13 @@ lspconfig.lua_ls.setup({
 		},
 	},
 })
-lspconfig.ruff_lsp.setup({})
 lspconfig.tsserver.setup({})
 lspconfig.volar.setup({})
-lspconfig.pylsp.setup({
-	settings = {
-		pylsp = {
-			plugins = {
-				pycodestyle = {
-					maxLineLength = 120, -- Set this to your preferred line length
-					-- If you want to ignore the line length check entirely, use:
-					-- ignore = {'E501'}
-				},
-			},
+lspconfig.pyright.setup({})
+lspconfig.tsserver.setup({
+	init_options = {
+		preferences = {
+			disableSuggestions = true,
 		},
 	},
 })
