@@ -14,7 +14,7 @@ end
 -- This is where you actually apply your config choices
 config.adjust_window_size_when_changing_font_size = false
 config.font = wezterm.font("Hack Nerd Font Mono")
-config.color_scheme = "Tokyo Night (Gogh)"
+config.color_scheme = "Catppuccin Mocha"
 config.automatically_reload_config = true
 config.audible_bell = "Disabled"
 config.font_size = 20
