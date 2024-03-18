@@ -35,7 +35,7 @@ require("mason-lspconfig").setup_handlers({
 })
 
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "tsserver", "volar", "pyright", "tsserver", "eslint" },
+  ensure_installed = { "lua_ls", "tsserver", "volar", "pyright" },
 })
 
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
