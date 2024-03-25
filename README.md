@@ -4,6 +4,8 @@
 
 [ripgrep](https://github.com/BurntSushi/ripgrep) for Neovim telescope
 
+C compiler in path for Treesitter
+
 ## Installing
 
 Clone into `$HOME` directory or `~`
