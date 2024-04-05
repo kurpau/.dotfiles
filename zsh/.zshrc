@@ -1,6 +1,7 @@
 # EXPORTS 
 
 export XDG_CONFIG_HOME=$HOME/.config
+export PATH="$PATH:/opt/nvim/"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
