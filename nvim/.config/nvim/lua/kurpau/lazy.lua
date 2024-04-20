@@ -88,6 +88,7 @@ local plugins = {
 		end,
 	},
 	{ "nvimtools/none-ls.nvim" },
+	{ "ThePrimeagen/vim-be-good" },
 }
 
 require("lazy").setup(plugins)
