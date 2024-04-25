@@ -27,7 +27,7 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				javascript = { { "prettierd", "prettier" } },
+				javascript = { "eslint_d" }, --, "prettierd", "prettier" },
 			},
 		},
 	},
