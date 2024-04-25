@@ -2,6 +2,10 @@
 
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="$PATH:/opt/nvim/"
+export PATH="$PATH:$HOME/.local/scripts/"
+
+# Keybindings
+bindkey -s ^f "tmux-sessionizer\n"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
