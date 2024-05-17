@@ -4,9 +4,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 export PATH="$PATH:/opt/nvim/"
 export PATH="$PATH:$HOME/.local/scripts/"
 
-# Keybindings
-bindkey -s ^f "tmux-sessionizer\n"
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -68,6 +65,9 @@ if ! command -v starship >/dev/null 2>&1; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
+
+# Keybindings
+bindkey -s ^f "tmux-sessionizer\n"
 
 # Initialize Starship
 eval "$(starship init zsh)"
