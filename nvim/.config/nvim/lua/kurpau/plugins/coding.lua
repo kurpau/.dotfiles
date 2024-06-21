@@ -15,7 +15,6 @@ return {
 			local cmp = require("cmp")
 			local defaults = require("cmp.config.default")()
 			return {
-				auto_brackets = {}, -- configure any filetype to auto add brackets
 				completion = {
 					completeopt = "menu,menuone,noinsert",
 				},
@@ -42,33 +41,8 @@ return {
 				}, {
 					{ name = "buffer" },
 				}),
-				experimental = {
-					ghost_text = {
-						hl_group = "CmpGhostText",
-					},
-				},
 				sorting = defaults.sorting,
 			}
-		end,
-		---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
-		config = function(_, opts)
-			for _, source in ipairs(opts.sources) do
-				source.group_index = source.group_index or 1
-			end
-			local cmp = require("cmp")
-			local Kind = cmp.lsp.CompletionItemKind
-			cmp.setup(opts)
-			cmp.event:on("confirm_done", function(event)
-				if not vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
-					return
-				end
-				local entry = event.entry
-				local item = entry:get_completion_item()
-				if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
-					local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
-					vim.api.nvim_feedkeys(keys, "i", true)
-				end
-			end)
 		end,
 	},
 
@@ -116,17 +90,6 @@ return {
     },
 	},
 
-	-- auto pairs
-	{
-		"echasnovski/mini.pairs",
-		event = "VeryLazy",
-		opts = {
-			mappings = {
-				["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\`].", register = { cr = false } },
-			},
-		},
-	},
-
 	-- Fast and feature-rich surround actions. For text that includes
 	-- surrounding characters like brackets or quotes, this allows you
 	-- to select the text inside, change or modify the surrounding characters,
@@ -169,32 +132,44 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		opts = {
-			ensure_installed = { "javascript", "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
-			-- Autoinstall languages that are not installed
+			ensure_installed = {
+				"bash",
+				"c",
+				"diff",
+				"html",
+				"css",
+				"javascript",
+				"jsdoc",
+				"json",
+				"jsonc",
+				"lua",
+				"luadoc",
+				"luap",
+				"markdown",
+				"markdown_inline",
+				"printf",
+				"python",
+				"query",
+				"regex",
+				"toml",
+				"tsx",
+				"typescript",
+				"vim",
+				"vimdoc",
+				"xml",
+				"yaml",
+			},
 			auto_install = true,
 			highlight = {
 				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
 				additional_vim_regex_highlighting = { "ruby" },
 			},
 			indent = { enable = true, disable = { "ruby" } },
 		},
 		config = function(_, opts)
-			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-			-- Prefer git instead of curl in order to improve connectivity in some environments
 			require("nvim-treesitter.install").prefer_git = true
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup(opts)
-
-			-- There are additional nvim-treesitter modules that you can use to interact
-			-- with nvim-treesitter. You should go explore a few and see what interests you:
-			--
-			--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 		end,
 	},
 
@@ -216,5 +191,18 @@ return {
 				end,
 			},
 		},
+	},
+
+	-- autopair
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = true,
+	},
+
+	-- autotag
+	{
+		"windwp/nvim-ts-autotag",
+		opts = {},
 	},
 }

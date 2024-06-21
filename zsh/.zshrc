@@ -1,8 +1,10 @@
 # EXPORTS 
-
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="$PATH:/opt/nvim/"
 export PATH="$PATH:$HOME/.local/scripts/"
+
+# ALIAS
+alias clipboard2photo="xclip -selection clipboard -t image/png -o > '$(date +%Y-%m-%d_%T).png'"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
