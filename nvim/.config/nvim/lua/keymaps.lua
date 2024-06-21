@@ -5,8 +5,8 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Quicklist navigation
-vim.keymap.set("n", "<C-S-k>", ":cprev<cr>")
-vim.keymap.set("n", "<C-S-j>", ":cnext<cr>")
+vim.keymap.set("n", "<C-M-k>", ":cprev<cr>")
+vim.keymap.set("n", "<C-M-j>", ":cnext<cr>")
 
 -- ============== toggle file explorer (nvim-tree) ============
 vim.keymap.set("n", "<leader>pv", ":NvimTreeToggle<cr>")
@@ -59,3 +59,67 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- Search for exact word
+vim.keymap.set("n", "<leader>/", function()
+	local word = vim.fn.input("Search exact word: ")
+	if word == "" then
+		print("Exact search canceled by user")
+		return
+	end
+
+	-- Check if the word contains non-word characters
+	local search_pattern
+	if word:find("%W") then
+		-- Escape non-word characters
+		search_pattern = vim.fn.escape(word, "\\/.*$^~[]")
+	else
+		-- Use word boundaries for exact words
+		search_pattern = "\\<" .. vim.fn.escape(word, "\\/.*$^~[]") .. "\\>"
+	end
+
+	-- Set the search pattern and perform the initial search
+	vim.fn.setreg("/", search_pattern)
+	vim.cmd("normal! /" .. search_pattern .. "<CR>")
+
+	-- Check if the search result is not found
+	if vim.fn.search(search_pattern, "w") == 0 then
+		print("Exact word '" .. word .. "' was not found.")
+	else
+		print("Found exact word '" .. word .. "'. Use 'n' or 'N' to navigate.")
+	end
+end, { noremap = true, silent = true })
+
+-- Scroll horizontally
+
+local function horizontal_scroll_mode(initial_char)
+	if vim.o.wrap then
+		return
+	end
+
+	vim.cmd("echohl Title")
+	local typed_char = initial_char
+	while vim.tbl_contains({ "h", "l", "H", "L" }, typed_char) do
+		vim.cmd("normal! z" .. typed_char)
+		vim.cmd("redraw")
+		vim.cmd("echon '-- Horizontal scrolling mode (h/l/H/L)'")
+		typed_char = vim.fn.nr2char(vim.fn.getchar())
+	end
+	vim.cmd("echohl None | echo '' | redraw")
+end
+
+vim.keymap.set("n", "zh", function()
+	horizontal_scroll_mode("h")
+end, { silent = true })
+
+vim.keymap.set("n", "zl", function()
+	horizontal_scroll_mode("l")
+end, { silent = true })
+
+vim.keymap.set("n", "zH", function()
+	horizontal_scroll_mode("H")
+end, { silent = true })
+
+vim.keymap.set("n", "zL", function()
+	horizontal_scroll_mode("L")
+end, { silent = true })
