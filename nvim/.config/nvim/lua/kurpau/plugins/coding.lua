@@ -38,6 +38,7 @@ return {
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "path" },
+					{ name = "nvim_px_to_rem" },
 				}, {
 					{ name = "buffer" },
 				}),
@@ -204,5 +205,9 @@ return {
 	{
 		"windwp/nvim-ts-autotag",
 		opts = {},
+	},
+	{
+		"jsongerber/nvim-px-to-rem",
+		config = true,
 	},
 }
