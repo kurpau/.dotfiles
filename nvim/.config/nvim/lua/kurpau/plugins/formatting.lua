@@ -19,6 +19,7 @@ return {
 				python = { "isort", "black" },
 				javascript = { "eslint_d" },
 				blade = { "blade-formatter" },
+				astro = { "prettierd", "prettier" },
 			},
 			format_on_save = function(bufnr)
 				local disable_filetypes = { c = true, cpp = true, blade = true }
