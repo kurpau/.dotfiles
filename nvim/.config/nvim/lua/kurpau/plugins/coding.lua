@@ -38,6 +38,7 @@ return {
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "path" },
+					{ name = "nvim_px_to_rem" },
 				}, {
 					{ name = "buffer" },
 				}),
@@ -158,6 +159,7 @@ return {
 				"vimdoc",
 				"xml",
 				"yaml",
+				"php",
 			},
 			auto_install = true,
 			highlight = {
@@ -170,6 +172,17 @@ return {
 			require("nvim-treesitter.install").prefer_git = true
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup(opts)
+
+			-- Add Blade parser configuration
+			local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+			parser_config.blade = {
+				install_info = {
+					url = "https://github.com/EmranMR/tree-sitter-blade",
+					files = { "src/parser.c" },
+					branch = "main",
+				},
+				filetype = "blade",
+			}
 		end,
 	},
 
@@ -204,5 +217,9 @@ return {
 	{
 		"windwp/nvim-ts-autotag",
 		opts = {},
+	},
+	{
+		"jsongerber/nvim-px-to-rem",
+		config = true,
 	},
 }

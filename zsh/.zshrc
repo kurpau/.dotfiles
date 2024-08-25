@@ -74,3 +74,4 @@ bindkey -s ^f "tmux-sessionizer\n"
 # Initialize Starship
 eval "$(starship init zsh)"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH=$HOME/.local/bin:$PATH
