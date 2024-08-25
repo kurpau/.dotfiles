@@ -123,3 +123,6 @@ end, { silent = true })
 vim.keymap.set("n", "zL", function()
 	horizontal_scroll_mode("L")
 end, { silent = true })
+
+-- keymap for oil.nvim
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
