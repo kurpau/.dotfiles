@@ -21,16 +21,6 @@ return {
 				blade = { "blade-formatter" },
 				astro = { "prettierd" },
 			},
-			format_on_save = function(bufnr)
-				local disable_filetypes = { c = true, cpp = true, blade = true }
-				if disable_filetypes[vim.bo[bufnr].filetype] then
-					return false
-				end
-				return {
-					lsp_fallback = true,
-					timeout_ms = 500,
-				}
-			end,
 		},
 	},
 }
