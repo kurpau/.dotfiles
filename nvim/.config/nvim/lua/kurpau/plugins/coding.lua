@@ -259,6 +259,14 @@ return {
 	},
 	{
 		"jsongerber/nvim-px-to-rem",
-		config = true,
+		config = function()
+			require("nvim-px-to-rem").setup({
+				filetypes = {
+					"css",
+					"scss",
+					"vue",
+				},
+			})
+		end,
 	},
 }
