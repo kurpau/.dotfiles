@@ -4,7 +4,15 @@
 
 [ripgrep](https://github.com/BurntSushi/ripgrep) for Neovim telescope
 
+[fzf](https://github.com/junegunn/fzf)
+
+[Hack Nerd Font](https://www.nerdfonts.com/font-downloads) for WezTerm (can be changed in config)
+
 C compiler in path for Treesitter
+
+## Nice to have
+
+[lazygit](https://github.com/jesseduffield/lazygit)
 
 ## Installing
 
