@@ -12,6 +12,7 @@ if wezterm.config_builder then
 end
 
 -- This is where you actually apply your config choices
+config.enable_wayland = false
 config.hide_mouse_cursor_when_typing = false
 config.adjust_window_size_when_changing_font_size = false
 config.font = wezterm.font("Hack Nerd Font Mono")
