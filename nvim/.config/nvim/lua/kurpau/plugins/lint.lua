@@ -19,7 +19,6 @@ return {
 				group = lint_augroup,
 				callback = function()
 					lint.try_lint()
-					print("hahah")
 				end,
 			})
 		end,
