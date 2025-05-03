@@ -1,21 +1,25 @@
 return {
-	{ -- Linting
+	{
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local lint = require("lint")
+
+			vim.env.ESLINT_D_PPID = tostring(vim.fn.getpid())
+
 			lint.linters_by_ft = {
-				javascript = { "biomejs" },
-				typescript = { "biomejs" },
+				javascript = { "eslint_d" },
+				typescript = { "eslint_d" },
+				vue = { "eslint_d" },
+				python = { "ruff" },
 			}
 
-			-- Create autocommand which carries out the actual linting
-			-- on the specified events.
 			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
 				group = lint_augroup,
 				callback = function()
-					require("lint").try_lint()
+					lint.try_lint()
+					print("hahah")
 				end,
 			})
 		end,

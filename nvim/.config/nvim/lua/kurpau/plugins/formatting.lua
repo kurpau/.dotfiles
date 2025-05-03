@@ -16,10 +16,10 @@ return {
 			notify_on_error = false,
 			formatters_by_ft = {
 				lua = { "stylua" },
-				python = { "isort" },
-				javascript = { "eslint_d" },
+				python = { "ruff_format" },
+				javascript = { "prettier" },
 				blade = { "blade-formatter" },
-				astro = { "prettierd" },
+				astro = { "prettier" },
 			},
 		},
 	},
