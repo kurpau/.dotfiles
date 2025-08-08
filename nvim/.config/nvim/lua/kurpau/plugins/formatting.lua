@@ -20,6 +20,7 @@ return {
 				javascript = { "prettier" },
 				blade = { "blade-formatter" },
 				astro = { "prettier" },
+        vue = { "eslint_d" },
 			},
 		},
 	},
