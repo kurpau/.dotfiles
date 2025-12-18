@@ -169,6 +169,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"bash",
+        "blade",
 				"c",
 				"diff",
 				"html",
