@@ -1,0 +1,18 @@
+{
+  "model": "opus",
+  "effortLevel": "high",
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(git branch -a)",
+      "Bash(git branch -v:*)",
+      "Bash(git branch -r)",
+      "Bash(git branch --list:*)",
+      "Bash(git remote -v)",
+      "Bash(git stash list)"
+    ]
+  }
+}
