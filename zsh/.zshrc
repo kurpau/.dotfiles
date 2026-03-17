@@ -1,5 +1,4 @@
 # EXPORTS 
-
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="$PATH:/opt/nvim/"
 export PATH="$PATH:$HOME/.local/scripts/"
@@ -72,3 +71,4 @@ bindkey -s ^f "tmux-sessionizer\n"
 # Initialize Starship
 eval "$(starship init zsh)"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH=$HOME/.local/bin:$PATH

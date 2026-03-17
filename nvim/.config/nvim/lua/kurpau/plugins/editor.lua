@@ -30,15 +30,51 @@ return {
 		end,
 	},
 
+	{
+		"stevearc/oil.nvim",
+		opts = {
+			default_file_explorer = false,
+		},
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+
 	-- Fuzzy finder.
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.6",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = {
+			"nvim-telescope/telescope-live-grep-args.nvim",
+			"nvim-lua/plenary.nvim",
+		},
 		config = function()
+			local telescope = require("telescope")
+			local lga_actions = require("telescope-live-grep-args.actions")
 			local builtin = require("telescope.builtin")
+
 			vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
-			vim.keymap.set("n", "<leader>ps", builtin.live_grep, {})
+			-- vim.keymap.set("n", "<leader>ps", builtin.live_grep, {})
+			vim.keymap.set(
+				"n",
+				"<leader>ps",
+				":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>"
+			)
+			vim.keymap.set("n", "<leader>pb", builtin.buffers, {})
+
+			telescope.setup({
+				extensions = {
+					live_grep_args = {
+						auto_quoting = true,
+						mappings = {
+							i = {
+								["<C-k>"] = lga_actions.quote_prompt(),
+								["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+								["<C-space>"] = lga_actions.to_fuzzy_refine,
+							},
+						},
+					},
+				},
+			})
+			telescope.load_extension("live_grep_args")
 		end,
 	},
 
@@ -80,44 +116,57 @@ return {
 		},
 	},
 
-	-- better diagnostics list and others
+	-- Easier file navigation with markers
 	{
-		"folke/trouble.nvim",
-		cmd = { "TroubleToggle", "Trouble" },
-		opts = { use_diagnostic_signs = true },
-		keys = {
-			{ "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-			{ "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-			{ "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-			{ "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
-			{
-				"[q",
-				function()
-					if require("trouble").is_open() then
-						require("trouble").previous({ skip_groups = true, jump = true })
-					else
-						local ok, err = pcall(vim.cmd.cprev)
-						if not ok then
-							vim.notify(err, vim.log.levels.ERROR)
-						end
-					end
-				end,
-				desc = "Previous Trouble/Quickfix Item",
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		opts = {
+			menu = {
+				width = vim.api.nvim_win_get_width(0) - 4,
 			},
-			{
-				"]q",
-				function()
-					if require("trouble").is_open() then
-						require("trouble").next({ skip_groups = true, jump = true })
-					else
-						local ok, err = pcall(vim.cmd.cnext)
-						if not ok then
-							vim.notify(err, vim.log.levels.ERROR)
-						end
-					end
-				end,
-				desc = "Next Trouble/Quickfix Item",
+			settings = {
+				save_on_toggle = true,
 			},
+		},
+		keys = function()
+			local keys = {
+				{
+					"<leader>H",
+					function()
+						require("harpoon"):list():add()
+					end,
+					desc = "Harpoon File",
+				},
+				{
+					"<leader>h",
+					function()
+						local harpoon = require("harpoon")
+						harpoon.ui:toggle_quick_menu(harpoon:list())
+					end,
+					desc = "Harpoon Quick Menu",
+				},
+			}
+
+			for i = 1, 5 do
+				table.insert(keys, {
+					"<leader>" .. i,
+					function()
+						require("harpoon"):list():select(i)
+					end,
+					desc = "Harpoon to File " .. i,
+				})
+			end
+			return keys
+		end,
+	},
+	{
+		"f-person/git-blame.nvim",
+		event = "VeryLazy",
+		opts = {
+			enabled = false, -- toggle git blame messages on/off with the :GitBlameToggle command.
+			message_template = " <summary> • <date> • <author> • <<sha>>",
+			date_format = "%d-%m-%Y %H:%M:%S",
+			virtual_text_column = 1,
 		},
 	},
 	-- easier file navigation with markers
